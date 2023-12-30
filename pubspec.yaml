@@ -17,6 +17,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   git_hooks: ^1.0.0
   dart_pre_commit: ^5.2.1
+  logger: ^2.0.2+1
 
 flutter:
   uses-material-design: true

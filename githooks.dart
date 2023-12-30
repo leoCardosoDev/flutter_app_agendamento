@@ -1,5 +1,6 @@
 import 'package:dart_pre_commit/dart_pre_commit.dart';
 import 'package:git_hooks/git_hooks.dart';
+import 'package:logger/logger.dart' as log;
 
 void main(List<String> arguments) {
   Map<Git, UserBackFun> params = {
@@ -8,6 +9,10 @@ void main(List<String> arguments) {
   };
   GitHooks.call(arguments, params);
 }
+
+var logger = log.Logger(
+  printer: log.PrettyPrinter(),
+);
 
 Future<bool> _preCommit() async {
   // Run dart_pre_commit package function to auto run various flutter commands
@@ -26,12 +31,12 @@ Future<bool> _conventionalCommitMsg() async {
 
   // If failed, check if issue is due to invalid tag
   } else if (!RegExp(r'(feat|fix|refactor|build|chore|perf|ci|docs|revert|style|test|merge)').hasMatch(commitMsg)) {
-    print(
+    logger.e(
         '🛑 Invalid type used in commit message. It should be one of (feat|fix|refactor|build|chore|perf|ci|docs|revert|style|test|merge)');
 
   // else refer the dev to conventional commit site
   } else {
-    print('🛑 Commit message should follow conventional commit pattern: https://www.conventionalcommits.org/en/v1.0.0/');
+    logger.e('🛑 Commit message should follow conventional commit pattern: https://www.conventionalcommits.org/en/v1.0.0/');
   }
 
   return false;
