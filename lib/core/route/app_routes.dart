@@ -9,7 +9,15 @@ final GoRouter router = GoRouter(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const Placeholder();
-      }
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'auth',
+          builder: (BuildContext context, GoRouterState state) {
+            return const Placeholder();
+          },
+        ),
+      ],
     ),
   ],
 );
