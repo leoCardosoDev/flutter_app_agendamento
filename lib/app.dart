@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/route/app_routes.dart';
+import 'core/routes/app_routes.dart';
 import 'core/flavors/flavor_config.dart';
 
 void bootstrap(FlavorConfig config) {
