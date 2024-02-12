@@ -1,4 +1,4 @@
-import '../core/flavor/flavor_config.dart';
+import 'core/flavors/flavor_config.dart';
 import 'app.dart';
 
 void main() {
