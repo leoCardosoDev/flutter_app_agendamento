@@ -13,7 +13,7 @@ class AuthDataSource {
     )
   );
 
-  Future<Result> login({required String email, required String password}) async {
+  Future<Result<LoginFailedResult, User>> login({required String email, required String password}) async {
     try {
       final response = await _dio.post('/v1-sign-in', data: { 'email': email, 'password': password });
       return Success(User.fromMap(response.data['result']));
@@ -35,16 +35,16 @@ enum LoginFailedResult {
   userNotActive
 }
 
-class Result {
+sealed class Result<R, T> {
   const Result();
 }
 
-class Success extends Result {
-  final dynamic object;
+final class Success<R, T> extends Result<R, T> {
+  final T object;
   const Success(this.object): super();
 }
 
-class Failure extends Result {
-  final dynamic error;
+final class Failure<R, T> extends Result<R, T> {
+  final R error;
   const Failure(this.error): super();
 }
