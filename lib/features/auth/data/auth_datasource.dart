@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../../core/helpers/result.dart';
 import '../models/user.dart';
 
 class AuthDataSource {
@@ -19,7 +20,7 @@ class AuthDataSource {
       return Success(User.fromMap(response.data['result']));
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
-        return const Failure(LoginFailedResult.incorrectCredentials);
+        return const Failure(LoginFailedResult.invalidCredentials);
       }
       return const Failure(LoginFailedResult.unknownError);
     } catch (_) {
@@ -29,22 +30,8 @@ class AuthDataSource {
 }
 
 enum LoginFailedResult {
-  incorrectCredentials,
+  invalidCredentials,
   offline,
   unknownError,
   userNotActive
-}
-
-sealed class Result<R, T> {
-  const Result();
-}
-
-final class Success<R, T> extends Result<R, T> {
-  final T object;
-  const Success(this.object): super();
-}
-
-final class Failure<R, T> extends Result<R, T> {
-  final R error;
-  const Failure(this.error): super();
 }
