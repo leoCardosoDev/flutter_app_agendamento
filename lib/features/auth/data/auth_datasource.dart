@@ -13,26 +13,19 @@ class AuthDataSource {
     )
   );
 
-  Future<Result<LoginFailedResult, User>> login({required String email, required String password}) async {
+  Future<Result<LoginResult, User>> login({required String email, required String password}) async {
     try {
       final response = await _dio.post('/v1-sign-in', data: { 'email': email, 'password': password });
       return Success(User.fromMap(response.data['result']));
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
-        return const Failure(LoginFailedResult.incorrectCredentials);
+        return Failure(LoginIncorrectCredentials());
       }
-      return const Failure(LoginFailedResult.unknownError);
+      return Failure(LoginUnknownError());
     } catch (_) {
-      return const Failure(LoginFailedResult.unknownError);
+      return Failure(LoginUnknownError());
     }
   }
-}
-
-enum LoginFailedResult {
-  incorrectCredentials,
-  offline,
-  unknownError,
-  userNotActive
 }
 
 sealed class Result<R, T> {
@@ -48,3 +41,10 @@ final class Failure<R, T> extends Result<R, T> {
   final R error;
   const Failure(this.error): super();
 }
+
+sealed class LoginResult {}
+final class LoginSuccess extends LoginResult {}
+final class LoginIncorrectCredentials extends LoginResult {}
+final class LoginOffline extends LoginResult {}
+final class LoginUnknownError extends LoginResult {}
+final class LoginUserNotActive extends LoginResult {}
