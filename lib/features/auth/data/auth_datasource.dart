@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../core/helpers/result.dart';
 import '../models/user.dart';
+import 'results/login_failed_result.dart';
 
 class AuthDataSource {
   final Dio _dio = Dio(
@@ -27,11 +28,4 @@ class AuthDataSource {
       return const Failure(LoginFailedResult.unknownError);
     }
   }
-}
-
-enum LoginFailedResult {
-  invalidCredentials,
-  offline,
-  unknownError,
-  userNotActive
 }

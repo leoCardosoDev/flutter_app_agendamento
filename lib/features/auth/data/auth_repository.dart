@@ -1,6 +1,7 @@
 import '../../../core/helpers/result.dart';
 import '../models/user.dart';
 import './auth_datasource.dart';
+import 'results/login_failed_result.dart';
 
 class AuthRepository {
   final AuthDataSource _dataSource = AuthDataSource();
