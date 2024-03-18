@@ -32,4 +32,5 @@ class AuthDataSource {
       return const Failure(LoginFailedResult.unknownError);
     }
   }
+
 }
